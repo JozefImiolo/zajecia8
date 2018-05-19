@@ -69,7 +69,15 @@ int main() {
 
      // check if stream has an open file
     assert( !file.is_open());
-
+   /* struct Point{
+        double x,y;
+    };
+    std::istream& operator>> (std::istream& is, Point& p)
+    {
+        return is>>p.x>>p.y;
+    }
+    Point p;
+std::cin>>p;*/
     // Closed file stream can be opened again, possibly a different file
     // file.open(path/*, std::ios::out - default value */);
 

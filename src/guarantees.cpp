@@ -4,7 +4,9 @@
 #include <fstream>
 
 // 1. nothrow/nofail - operation can't possibly fail or throw an exception
+// 1 poziom bezpiszensttwa
 void f(std::vector<int>& a, std::vector<int>& b) {
+    // nierzuci w dokumentacji sprawdzone
     int f = 3;                     // can't throw
     if (! a.empty()) {             // .empty() is nothrow
         a[0] = f + 5;              // can't throw
@@ -66,9 +68,22 @@ void basic_with_RAII(const char* path, std::vector<int>& vec) {
     for (int i = 0; i < 10; ++ i) {
         buffer[i] = some_throwing_function();
     }
+    //
+    vec.reserve(vec.size()+10);
+    // jesli poleci wyjatek to nie zminie nam vectora
+    //jesli ok to pushback pojdzie
+    // przechowujemy int konst kop nie rzuci wyjatku
+    // nie ma wyjatku wiec stron guarantee, bez dodatkowego narzutu , tzreba sie zastanwoic
     for (int i = 0; i < 10; ++ i) {
         vec.push_back(buffer[i]);
     }
+
+
+
+        // skopiowac lub przenisc problem z konstruktor kopijujacym i rzuci wyjatek np, string
+        //skutek przerwana operacja vector czesciowo zmodyfikowany
+        // lepiej albo rozbimy do okonca albo nic dlateg o to basic
+
 }
 
 // 4. Strong guarantee - if it fails, state of involved objects is unchanged
@@ -88,7 +103,14 @@ void strong(const char* path, std::vector<int>& vec) {
     for (int i = 0; i < 10; ++ i) {
         copy.push_back(buffer[i]);
     }
-    std::swap(vec, copy);     // nothrow - the whole function succeeded
+    std::swap(vec, copy);     // nothrow - the whole function succeeded przepiecie wskanikkow i rzomair
+
+    //gwarantujemy sukces albo stan obiektow jest nietkniety
+    // basic guarantee zawsze
+
+    // stong zastanowic sie realne podejscie
+
+
 }
 
 

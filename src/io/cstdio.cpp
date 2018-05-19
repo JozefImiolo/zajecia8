@@ -17,6 +17,7 @@ int main() {
         // stdout - standard output
         // stdin  - standard input
         fputs("Could not open file\n", stderr);
+        puts("dfsd"); //nie trzeba /n
         exit(1);
     }
 

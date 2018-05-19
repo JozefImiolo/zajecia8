@@ -91,6 +91,36 @@ template <typename T>
 template <typename U>
 void D<T>::f() { }
 
+
+template<typename T>
+class Vector{
+    T *buf;
+public:
+    Vector(int n) :buf{new T[n]}
+      ~Vector() {delete buf;}
+    T& operator[](int a){return buf[a]};
+    
+    // vec[3]=9;
+    
+   // operator[](vector& , int )
+    
+    const  T& operator[](int a) const {return buf[a]};
+    
+    //mamy const vector 
+      // operator[](const vector& , int )
+    // dwie wersje sie robi
+    //konstruktor szblonowy trzeba zapisac konstruktor kopiujacy bo domyslny bedzie robil glupoty i szablonowy nigdzie nie zostanie uzyty
+    template<typename U>
+    Vector<const Vector<U>& v{
+        
+        //alokacja
+        for (int=0; i<v.size(); i++)
+        {
+            buf[i]=v[i];
+        }
+    }
+};
+
 //#define MAX(a,b) ((a)<(b)?(b):(a))
 int main() {
 
@@ -121,7 +151,7 @@ int main() {
    max<>(2, 3);   // max<int> specialization jkurwa weresja szablonowa
 
 
- max(1.2f, 5.0f); // linker error - max<float> not defined
+// max(1.2f, 5.0f); // linker error - max<float> not defined
 
 //    A<int, 5> a1;      // generic version
 //    int val = a1.f();

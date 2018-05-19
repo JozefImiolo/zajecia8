@@ -15,7 +15,7 @@ struct Loud {
 
 // Case 1 - exception caught inside the function
 
-void simple() {
+void simple() noexcept {
     Loud a{"Foo"};
     try {
         Loud a{"Ala"};
@@ -54,7 +54,7 @@ void wrong_order_value() {
     }
 }
 
-// Case 2b - catch by reference, wrong order
+// Case 2b - catch by reference, wrong order polowiczny  sukces
 void wrong_order_reference() {
     Loud a{"Ala"};
     try {
@@ -86,6 +86,9 @@ void wrong_order_pointers() {
         throw new MyException{};
     } catch (const std::exception* e) { // matches, but no copy - no slicing
         std::cout << "std::exception: " << e->what() << std::endl;
+
+        //przez wartosc to e->what wywolane z klasy exception
+
         delete e;
     } catch (const MyException* e) {    // matches better, but too late
         std::cout << "MyException: " << e->what() << std::endl;
@@ -119,6 +122,8 @@ int h() {
         std::cout << "h(): cought std::exception saying: " << e.what() << std::endl;
         std::cout << "Rethrowing..." << std::endl;
         throw; // try changing to throw e; - what happens?
+        // my exceptions rzuca throw
+        // throw e ; rzuca kopie exceptions
     }
 }
 
@@ -136,10 +141,10 @@ int k() {
 
 
 int main() {
-    // simple();
-    // wrong_order_value();
+     simple();
+    //wrong_order_value();
     // wrong_order_reference();
     // right_order_value();
     // wrong_order_pointers();
-    k();
+    //k();
 }
